@@ -16,6 +16,7 @@
 package com.github.lburgazzoli.gradle.plugin.karaf.features
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.util.VersionNumber
 
@@ -24,6 +25,7 @@ import com.github.lburgazzoli.gradle.plugin.karaf.KarafTaskTrait
 /**
  * @author lburgazzoli
  */
+@CacheableTask
 class KarafFeaturesTask extends DefaultTask implements KarafTaskTrait {
     public static final String GROUP = "karaf"
     public static final String NAME = "generateFeatures"
@@ -31,13 +33,6 @@ class KarafFeaturesTask extends DefaultTask implements KarafTaskTrait {
 
     public static final String FEATURES_XMLNS_PREFIX = 'http://karaf.apache.org/xmlns/features/v'
     public static final VersionNumber XMLNS_V13 = new  VersionNumber(1, 3, 0, null)
-
-    KarafFeaturesTask() {
-        // TODO: to be improved
-        outputs.upToDateWhen {
-            false
-        }
-    }
 
     @TaskAction
     void run() {

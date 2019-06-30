@@ -19,7 +19,7 @@ plugins {
 //
 // *****************************************************************************
 
-group               = 'com.github.lburgazzoli'
+group               = 'info.globalbus'
 description         = 'A gradle plugin for Karaf'
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7

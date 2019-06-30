@@ -17,6 +17,7 @@ package com.github.lburgazzoli.gradle.plugin.karaf.kar
 
 import com.github.lburgazzoli.gradle.plugin.karaf.KarafTaskTrait
 import com.github.lburgazzoli.gradle.plugin.karaf.mvn.MvnProtocolParser
+import org.gradle.api.tasks.CacheableTask
 import org.gradle.jvm.tasks.Jar
 
 import java.nio.file.Files
@@ -26,17 +27,12 @@ import java.nio.file.StandardCopyOption
 /**
  * @author lburgazzoli
  */
+@CacheableTask
 class KarafKarTask extends Jar implements KarafTaskTrait  {
     public static final String GROUP = 'karaf'
     public static final String NAME = 'generateKar'
     public static final String DESCRIPTION = 'Generates Karaf KAR Archive'
     public static final String EXTENSION = 'kar'
-
-    KarafKarTask() {
-        outputs.upToDateWhen {
-            false
-        }
-    }
 
     @Override
     protected void copy() {
