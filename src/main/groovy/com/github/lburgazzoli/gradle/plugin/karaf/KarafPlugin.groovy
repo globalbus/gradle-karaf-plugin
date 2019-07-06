@@ -16,13 +16,14 @@
 package com.github.lburgazzoli.gradle.plugin.karaf
 
 import com.github.lburgazzoli.gradle.plugin.karaf.features.KarafFeaturesTask
-import com.github.lburgazzoli.gradle.plugin.karaf.kar.KarafKarTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.plugins.WarPlugin
+import org.gradle.api.tasks.ClasspathNormalizer
+
 /**
  * @author lburgazzoli
  */
@@ -44,14 +45,6 @@ class KarafPlugin implements Plugin<Project> {
             description = KarafFeaturesTask.DESCRIPTION
         }
 
-        // Karaf KAR
-        def kar = project.task( KarafKarTask.NAME , type: KarafKarTask) {
-            group       = KarafKarTask.GROUP
-            description = KarafKarTask.DESCRIPTION
-        }
-
-        kar.dependsOn feat
-
         def war = project.tasks.find { it.name == WarPlugin.WAR_TASK_NAME }
         def jar = project.tasks.find { it.name == JavaPlugin.JAR_TASK_NAME }
 
@@ -65,7 +58,7 @@ class KarafPlugin implements Plugin<Project> {
             if (ext.hasFeatures()) {
                 ext.features.featureDescriptors.each {
                     it.configurations.each { Configuration configuration ->
-                        feat.inputs.files(configuration)
+                        feat.inputs.files(configuration).withPropertyName('classpath').withNormalizer(ClasspathNormalizer)
                         feat.dependsOn(configuration)
                     }
                 }
@@ -79,7 +72,6 @@ class KarafPlugin implements Plugin<Project> {
             project.artifacts.add(ARTIFACTS_CONFIGURATION_NAME, ext.features.outputFile) {
                 classifier = 'features'
             }
-            project.artifacts.add(ARTIFACTS_CONFIGURATION_NAME, ext.kar.outputDir)
         }
     }
 }
