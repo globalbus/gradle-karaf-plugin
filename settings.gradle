@@ -1,1 +1,9 @@
+pluginManagement {
+    repositories {
+        maven {
+            url 'http://artifactory.ci.warta.pl/artifactory/soa-mvn'
+        }
+    }
+}
+
 rootProject.name = "gradle-karaf-plugin"

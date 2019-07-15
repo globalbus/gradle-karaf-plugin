@@ -15,27 +15,20 @@
  */
 package com.github.lburgazzoli.gradle.plugin.karaf
 
-import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.result.ResolvedComponentResult
 import org.gradle.api.artifacts.result.ResolvedDependencyResult
+
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * @author lburgazzoli
  */
 class KarafUtils {
 
-    static void forEachTask(Project project, List<String> tasks, Closure closure) {
-        project.tasks.findAll {
-            it.name in tasks
-        }.each {
-            closure(it)
-        }
-    }
-
     static void walkDeps(List<Configuration> configurations, Closure closure) {
         configurations.each {
-            Set<ResolvedDependencyResult> alreadyKnownDependencies = new HashSet<>();
+            Set<ResolvedDependencyResult> alreadyKnownDependencies = ConcurrentHashMap.newKeySet()
             walkDeps(it, it.incoming.resolutionResult.root, alreadyKnownDependencies, closure)
         }
     }
