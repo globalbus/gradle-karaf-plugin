@@ -68,6 +68,6 @@ class MvnDependencyResolver extends DependencyResolver {
             gnv = "${gnv}//${dependencyDescriptor.classifier}"
         }
 
-        return dependencyDescriptor.isWar() ? "war:mvn:${gnv}/war" : "mvn:${gnv}"
+        return dependencyDescriptor.isWar() ? "mvn:${gnv}/war" : "mvn:${gnv}"
     }
 }

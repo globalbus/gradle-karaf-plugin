@@ -34,7 +34,7 @@ class KarafPlugin implements Plugin<Project> {
     void apply(Project project) {
         def ext = KarafPluginExtension.create(project)
 
-        project.configurations.create(CONFIGURATION_NAME)
+        project.configurations.register(CONFIGURATION_NAME)
 
         // Karaf Features
         def feat = project.tasks.register(KarafFeaturesTask.NAME, KarafFeaturesTask.class) { KarafFeaturesTask task ->
